@@ -1,0 +1,17 @@
+version: "3.9"
+
+services:
+  interview_app_db:
+    container_name: "db_postgres"
+    image: postgres:16
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_DB: interview_app
+      POSTGRES_USER: docker
+      POSTGRES_PASSWORD: secret
+    volumes:
+      - interview_app_data:/var/lib/postgresql/data
+
+volumes:
+  interview_app_data:
