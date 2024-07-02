@@ -1,6 +1,7 @@
 import { ReactElement } from "react";
 import CategoriesPage from "../pages/categories";
 import CategoryPage from "../pages/categories/category/CategoryPage";
+import QuestionPage from "../pages/question";
 
 interface NavigationProps {
     path: string;
@@ -15,6 +16,10 @@ const NavigationItems: NavigationProps[] = [
     {
         path: '/:id',
         element: <CategoryPage />
+    },
+    {
+        path: '/question/add',
+        element: <QuestionPage />
     }
 ];
 

@@ -61,7 +61,7 @@ const paragraphCss = css`
     letter-spacing: 0px;
 `;
 
-const typographyVariants: Record<TypographyProps['variant'], any> = {
+const typographyVariants: Record<TypographyProps['$variant'], any> = {
     h1: h1Css,
     h2: h2Css,
     h3: h3Css,
@@ -73,8 +73,8 @@ const typographyVariants: Record<TypographyProps['variant'], any> = {
 
 const Typography = styled.div<TypographyProps>`
     margin: 0;
-    ${({ variant }) => variant && css`
-        ${typographyVariants[variant]}
+    ${({ $variant }) => $variant && css`
+        ${typographyVariants[$variant]}
     `}
 `;
 

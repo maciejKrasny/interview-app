@@ -6,7 +6,7 @@ const Tile: React.FC<TileProps> = ({ title, onClick }) => {
     return (
         <Container onClick={() => onClick()}>
             <TextContainer>
-                <Title variant="h1">{title}</Title>
+                <Title $variant="h1">{title}</Title>
                 <Description></Description>
             </TextContainer>
             <GoIconContainer>

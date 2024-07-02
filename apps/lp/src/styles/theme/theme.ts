@@ -21,6 +21,7 @@ interface ThemeColors {
     body: string;
     background: string;
     border: string;
+    secondary: string;
 }
 
 export type ThemeMode = 'dark' | 'light';
@@ -30,7 +31,8 @@ const lightTheme: ThemeColors = {
     accent: colors.yellow,
     body: colors.black,
     background: colors.white,
-    border: colors.gray
+    border: colors.gray01,
+    secondary: colors.gray02,
 }
 
 const darkTheme: ThemeColors = {
@@ -38,7 +40,8 @@ const darkTheme: ThemeColors = {
     accent: colors.yellow,
     body: colors.white,
     background: colors.purple,
-    border: colors.gray
+    border: colors.gray01,
+    secondary: colors.gray02,
 }
 
 export const theme: MainVariantsTheme = {

@@ -18,7 +18,7 @@ function App() {
         <BrowserRouter>
           <Routes>
             {NavigationItems.map((item) => (
-              <Route {...item} />
+              <Route key={item.path} {...item} />
             ))}
           </Routes>
         </BrowserRouter>

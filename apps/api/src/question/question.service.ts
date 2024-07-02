@@ -29,7 +29,7 @@ export class QuestionService {
     getAllForCategory(categoryId: string) {
         return this.questionRepository.find({
             order: {
-                creationDate: 'DESC',
+                creationDate: 'ASC',
             },
             where: {
                 category: {

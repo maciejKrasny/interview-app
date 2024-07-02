@@ -4,8 +4,9 @@ import Loader from "#//components/Loader/Loader";
 import Tile from "#//components/Tile/Tile";
 import { useQuery } from "@apollo/client";
 import React from "react";
-import { CategoriesContainer } from "./CategoriesPage.styled";
+import { CategoriesContainer, PageContainer } from "./CategoriesPage.styled";
 import { useNavigate } from "react-router-dom";
+import withMenu from "#//utils/withMenu.hoc";
 
 
 const CategoriesPage: React.FC = () => {
@@ -21,10 +22,12 @@ const CategoriesPage: React.FC = () => {
     }
 
     return (
-        <CategoriesContainer>
-            {data?.categories.map((category) => <Tile title={category.name} description="" onClick={() => handleOnClick(category.id)} key={category.name} />)}
-        </CategoriesContainer>
+        <PageContainer>
+            <CategoriesContainer>
+                {data?.categories.map((category) => <Tile title={category.name} description="" onClick={() => handleOnClick(category.id)} key={category.name} />)}
+            </CategoriesContainer>
+        </PageContainer>
     );
 }
 
-export default CategoriesPage;
+export default withMenu(CategoriesPage);

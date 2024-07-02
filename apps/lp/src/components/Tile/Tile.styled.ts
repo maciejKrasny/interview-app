@@ -21,6 +21,7 @@ export const Container = styled.div`
 `;
 
 export const Title = styled(Typography)`
+    text-align: left;
     color: ${({ theme }) => theme.colors.primary};
 `;
 
