@@ -15,7 +15,10 @@
     "@apollo/client": "^3.10.8",
     "graphql": "^16.9.0",
     "styled-components": "^6.1.11",
-    "react-router-dom": "^6.24.0"
+    "react-router-dom": "^6.24.0",
+    "react-quill": "^2.0.0",
+    "highlight.js": "11.9.0",
+    "quill-image-resize-module-react": "^3.0.0"
   },
   "devDependencies": {
     "@types/react": "^18.3.3",
@@ -27,6 +30,7 @@
     "eslint-plugin-react-hooks": "^4.6.2",
     "eslint-plugin-react-refresh": "^0.4.7",
     "typescript": "^5.2.2",
-    "vite": "^5.3.1"
+    "vite": "^5.3.1",
+    "styles-loader": "4.0.1"
   }
 }

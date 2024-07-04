@@ -6,3 +6,7 @@ export const QuestionsContainer = styled.div`
     padding: 6rem 1rem 2rem;
     max-width: ${toRem(1024)};
 `;
+
+export const AnswerContainer = styled.div`
+    margin-block-start: 1rem;
+`;

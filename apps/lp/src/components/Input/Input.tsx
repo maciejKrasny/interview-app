@@ -1,6 +1,6 @@
 import { Label, StyledInput } from "./Input.styled";
 
-interface TextAreaProps extends React.HtmlHTMLAttributes<HTMLInputElement> {
+interface TextAreaProps extends React.InputHTMLAttributes<HTMLInputElement> {
     label: string;
 }
 
