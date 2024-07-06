@@ -3,17 +3,21 @@ import Input from "#//components/Input/Input";
 import RichTextEditor from "#//components/RichTextEditor/RichTextEditor";
 import Typography from "#//components/Typography";
 import withMenu from "#//utils/withMenu.hoc";
-import { ChangeEventHandler, useReducer } from "react";
+import { ChangeEventHandler, useMemo, useReducer } from "react";
 import { Container, StyledForm } from "./QuestionPage.styled";
-import { useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { ADD_QUESTION } from "#//api/mutations/addQuestion";
 import { useNavigate } from "react-router-dom";
+import Select, { SelectOption, SelectOptionProps } from "#//components/Select/Select";
+import { GET_CATEGORIES, GET_CATEGORIES_DATA } from "#//api/queries/getCategories";
+import Loader from "#//components/Loader/Loader";
 
 interface IFormValue {
     questionPl: string;
     questionEn: string;
     answerPl?: string;
     answerEn?: string;
+    categoryId?: string;
 }
 
 enum ActionType {
@@ -21,16 +25,19 @@ enum ActionType {
     CHANGE_QUESTION_EN,
     CHANGE_ANSWER_PL,
     CHANGE_ANSWER_EN,
+    CHANGE_CATEGORY,
 }
 
-interface IAction {
+interface IBaseAction {
     type: ActionType;
     payload: string;
 }
 
+
+type IAction = IBaseAction;
+
 function reducer(state: IFormValue, action: IAction) {
     const { payload, type } = action;
-    console.log(type, payload);
     switch (type) {
         case ActionType.CHANGE_QUESTION_PL: {
             return {
@@ -56,20 +63,29 @@ function reducer(state: IFormValue, action: IAction) {
                 answerEn: payload,
             }
         }
+        case ActionType.CHANGE_CATEGORY: {
+            return {
+                ...state,
+                categoryId: payload,
+            }
+        }
         default: {
             return state;
         }
     }
-
 }
 
 const QuestionPage: React.FC = () => {
+    const { loading, data } = useQuery<GET_CATEGORIES_DATA>(GET_CATEGORIES);
     const [addQuestion] = useMutation(ADD_QUESTION)
     const navigate = useNavigate();
 
     const [state, dispatch] = useReducer(reducer, {
         questionEn: '',
-        questionPl: ''
+        questionPl: '',
+        categoryId: '',
+        answerPl: '',
+        answerEn: ''
     })
 
     const handleOnChangeQuestionPl: ChangeEventHandler<HTMLInputElement> = (event) => {
@@ -91,7 +107,7 @@ const QuestionPage: React.FC = () => {
     const handleOnSubmit = async (event: any) => {
         event.preventDefault();
         const a = {
-            categoryId: '6cb83820-473d-49d7-8269-521621fba058',
+            categoryId: state.categoryId,
             textPolish: state.questionPl,
             textEnglish: state.questionEn,
             answerPolish: state.answerPl,
@@ -104,13 +120,37 @@ const QuestionPage: React.FC = () => {
             }
         });
 
-        navigate(-1);
+        navigate(`/${state.categoryId}`);
 
+    }
+
+    const handleOnSelect = (option: string) => {
+        dispatch({ type: ActionType.CHANGE_CATEGORY, payload: option });
+    }
+
+    const selectData = useMemo(() => {
+        if (!data?.categories.length) {
+            return [];
+        }
+        return data?.categories.map(({ id, name }) => (
+            <SelectOption label={name} value={id} />
+        ))
+    }, [data?.categories])
+
+    if (loading) {
+        return (
+            <Container>
+                <Loader />
+            </Container>
+        )
     }
 
     return (
         <Container>
             <Typography $variant="h1">Dodaj pytanie</Typography>
+            <Select onSelect={handleOnSelect}>
+                {selectData}
+            </Select>
             <StyledForm>
                 <Input onChange={handleOnChangeQuestionPl} value={state.questionPl} label="Pytanie po polsku" />
                 <Input onChange={handleOnChangeQuestionEn} value={state.questionEn} label="Pytanie po angielsku" />

@@ -21,13 +21,13 @@ const AccordionBody: React.FC<AccordionBodyProps> = ({ answerPolish, answerEngli
     const body = selectedSegment === 'PL' ? answerPolish : answerEnglish;
 
     return (
-        <p>
+        <div>
             <SegmentButton active={selectedSegment} segments={['PL', 'EN']} onClick={handleOnSegmentClick} />
             <AnswerContainer>
                 <ReadOnlyContainer dangerouslySetInnerHTML={{ __html: body }}>
                 </ReadOnlyContainer>
             </AnswerContainer>
-        </p>
+        </div>
     )
 }
 

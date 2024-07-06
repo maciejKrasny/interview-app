@@ -1,3 +1,4 @@
+import { GET_CATEGORIES, GET_CATEGORIES_DATA } from "#//api/queries/getCategories";
 import { BackAndTitleContainer, CenterContainer, Container, Title } from "./Menu.styled";
 import useMenuProps from "./useMenuProps";
 

@@ -10,7 +10,7 @@ const modules = {
     toolbar: [
         [{ header: '1' }, { header: '2' }],
         [{ size: [] }],
-        ['bold', 'italic', 'underline', 'strike', 'code-block'],
+        ['bold', 'italic', 'underline', 'code-block'],
         [
             { list: 'ordered' },
             { list: 'bullet' },
@@ -33,6 +33,7 @@ const modules = {
 const formats = [
     "header",
     "bold",
+    "italic",
     "underline",
     "code-block",
     "list",

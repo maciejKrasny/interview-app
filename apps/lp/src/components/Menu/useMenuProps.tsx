@@ -1,10 +1,21 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import AddCircleIcon from "../Icons/AddCircleIcon";
 import BackIcon from "../Icons/BackIcon";
+import { useQuery } from "@apollo/client";
+import { GET_CATEGORY, GET_CATEGORY_DATA } from "#//api/queries/getCategory";
 
 const useMenuProps = () => {
     const { pathname, key } = useLocation();
+    const { id } = useParams();
     const navigate = useNavigate();
+
+    const { data } = useQuery<GET_CATEGORY_DATA>(GET_CATEGORY, {
+        variables: {
+            id,
+        }
+    });
+
+
 
     const buildPropsObject = () => {
         if (pathname === '/') {
@@ -26,7 +37,7 @@ const useMenuProps = () => {
         }
 
         return {
-            title: 'NestJS',
+            title: data?.category.name,
             backIcon: <BackIcon onClick={() => navigateBack()} />,
             addIcon: <AddCircleIcon onClick={() => navigateAddQuestion()} />
         }

@@ -18,9 +18,9 @@ const CategoriesPage: React.FC = () => {
     }
 
     if (loading) {
-        <Loader />
+        return <Loader />;
     }
-
+    console.log('test');
     return (
         <PageContainer>
             <CategoriesContainer>
