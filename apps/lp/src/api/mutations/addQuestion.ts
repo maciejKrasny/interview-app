@@ -1,3 +1,4 @@
+import { Question } from "#//models/Question";
 import { gql } from "@apollo/client";
 
 export const ADD_QUESTION = gql`
@@ -7,3 +8,11 @@ export const ADD_QUESTION = gql`
     }
     }
 `;
+
+export interface QuestionWithCategory extends Omit<Question, 'id'> {
+    categoryId: string;
+}
+
+export interface ADD_QUESTION_PARAMS {
+    createQuestionDto: QuestionWithCategory;
+}

@@ -3,21 +3,22 @@ import Input from "#//components/Input/Input";
 import RichTextEditor from "#//components/RichTextEditor/RichTextEditor";
 import Typography from "#//components/Typography";
 import withMenu from "#//utils/withMenu.hoc";
-import { ChangeEventHandler, useMemo, useReducer } from "react";
+import { ChangeEventHandler, useEffect, useMemo, useReducer } from "react";
 import { Container, StyledForm } from "./QuestionPage.styled";
-import { useMutation, useQuery } from "@apollo/client";
-import { ADD_QUESTION } from "#//api/mutations/addQuestion";
+import { ADD_QUESTION_PARAMS } from "#//api/mutations/addQuestion";
 import { useNavigate } from "react-router-dom";
-import Select, { SelectOption, SelectOptionProps } from "#//components/Select/Select";
-import { GET_CATEGORIES, GET_CATEGORIES_DATA } from "#//api/queries/getCategories";
+import Select, { SelectOption } from "#//components/Select/Select";
 import Loader from "#//components/Loader/Loader";
+import { createQuestion } from "#//redux/slices/question.slice";
+import { useAppDispatch, useAppSelector } from "#//redux/hooks";
+import { fetchCategories } from "#//redux/slices/category.slice";
 
 interface IFormValue {
     questionPl: string;
     questionEn: string;
-    answerPl?: string;
-    answerEn?: string;
-    categoryId?: string;
+    answerPl: string;
+    answerEn: string;
+    categoryId: string;
 }
 
 enum ActionType {
@@ -76,8 +77,10 @@ function reducer(state: IFormValue, action: IAction) {
 }
 
 const QuestionPage: React.FC = () => {
-    const { loading, data } = useQuery<GET_CATEGORIES_DATA>(GET_CATEGORIES);
-    const [addQuestion] = useMutation(ADD_QUESTION)
+    const { categories, loading } = useAppSelector(state => state.categories)
+    const { loading: questionLoading } = useAppSelector(state => state.questions)
+    const reduxDispatch = useAppDispatch();
+
     const navigate = useNavigate();
 
     const [state, dispatch] = useReducer(reducer, {
@@ -87,6 +90,19 @@ const QuestionPage: React.FC = () => {
         answerPl: '',
         answerEn: ''
     })
+
+    useEffect(() => {
+        if (categories.length) {
+            return;
+        }
+        reduxDispatch(fetchCategories())
+    }, [])
+
+    useEffect(() => {
+        if (state.categoryId === '' && categories.length) {
+            dispatch({ type: ActionType.CHANGE_CATEGORY, payload: categories[0].id })
+        }
+    }, [categories.length])
 
     const handleOnChangeQuestionPl: ChangeEventHandler<HTMLInputElement> = (event) => {
         dispatch({ type: ActionType.CHANGE_QUESTION_PL, payload: event.target.value });
@@ -106,7 +122,7 @@ const QuestionPage: React.FC = () => {
 
     const handleOnSubmit = async (event: any) => {
         event.preventDefault();
-        const a = {
+        const createQuestionDto: ADD_QUESTION_PARAMS['createQuestionDto'] = {
             categoryId: state.categoryId,
             textPolish: state.questionPl,
             textEnglish: state.questionEn,
@@ -114,11 +130,7 @@ const QuestionPage: React.FC = () => {
             answerEnglish: state.answerEn
         };
 
-        await addQuestion({
-            variables: {
-                createQuestionDto: a,
-            }
-        });
+        await reduxDispatch(createQuestion({ createQuestionDto }))
 
         navigate(`/${state.categoryId}`);
 
@@ -129,15 +141,15 @@ const QuestionPage: React.FC = () => {
     }
 
     const selectData = useMemo(() => {
-        if (!data?.categories.length) {
+        if (!categories.length) {
             return [];
         }
-        return data?.categories.map(({ id, name }) => (
+        return categories.map(({ id, name }) => (
             <SelectOption label={name} value={id} />
         ))
-    }, [data?.categories])
+    }, [categories])
 
-    if (loading) {
+    if (loading === 'pending' || questionLoading === 'pending') {
         return (
             <Container>
                 <Loader />

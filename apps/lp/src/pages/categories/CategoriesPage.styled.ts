@@ -1,5 +1,5 @@
 import { toRem } from "#//styles/utils/calc";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const PageContainer = styled.div`
     max-width: ${toRem(1024)};

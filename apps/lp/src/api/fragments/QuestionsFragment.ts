@@ -8,5 +8,6 @@ export const QuestionsFragment = gql`
         textEnglish
         answerPolish
         answerEnglish
+        learningStatus
     } 
 `

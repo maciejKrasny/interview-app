@@ -4,4 +4,11 @@ export interface Question {
     textEnglish: string;
     answerPolish: string;
     answerEnglish: string;
+    learningStatus: LearningStatus;
+}
+
+export enum LearningStatus {
+    TODO = 'TODO',
+    PART = 'PART',
+    DONE = 'DONE'
 }

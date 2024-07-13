@@ -28,4 +28,7 @@ export class Question {
 
     @Field(() => Category)
     category: Category;
+
+    @Field()
+    categoryId: string;
 }

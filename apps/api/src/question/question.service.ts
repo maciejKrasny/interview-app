@@ -3,8 +3,7 @@ import { Repository } from "typeorm";
 import { QuestionEntity } from "./entities/question.entity";
 import { InjectRepository } from "@nestjs/typeorm";
 import { CreateQuestionDto } from "./dtos/createQuestion.dto";
-import { UpdateLearningStatus } from "./dtos/updateLearningStatus.dto";
-
+import { UpdateLearningStatusDto } from "./dtos/updateLearningStatus.dto";
 @Injectable()
 export class QuestionService {
     constructor(
@@ -22,8 +21,12 @@ export class QuestionService {
         });
     }
 
-    updateLearningStatus(id: string, dto: UpdateLearningStatus) {
-        return this.questionRepository.update(id, dto);
+    async updateLearningStatus(id: string, dto: UpdateLearningStatusDto) {
+        const a = await this.questionRepository.save({
+            id,
+            ...dto
+        });
+        return a;
     }
 
     getAllForCategory(categoryId: string) {

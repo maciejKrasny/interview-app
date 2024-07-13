@@ -2,6 +2,7 @@ import styled, { css } from "styled-components";
 import Typography from "../Typography";
 
 export const Container = styled.div`
+    position: relative;
     box-shadow: ${({ theme }) => `4px 8px 24px -1px ${theme.colors.border}`};
     border-radius: 0.5rem;
     border: ${({ theme }) => `1px solid ${theme.colors.border}`};
@@ -71,3 +72,29 @@ export const Body = styled.div<OpenContainerProps>`
         margin-bottom: 1rem;
     }
 `;
+
+export const StatusAndIconContainer = styled.div`
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+`;
+
+interface StatusContainerProps {
+    $color: string;
+}
+
+export const StatusContainer = styled.div<StatusContainerProps>`
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 12px;
+    ${({ $color }) => $color && css`
+        color: ${$color};
+    `}
+
+    svg {
+        width: 1rem;
+        height: 1rem;
+    }
+`;
+

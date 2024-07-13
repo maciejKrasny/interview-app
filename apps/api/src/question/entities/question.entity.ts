@@ -44,4 +44,7 @@ export class QuestionEntity {
 
     @ManyToOne(() => CategoryEntity, category => category.id)
     category: CategoryEntity;
+
+    @Column({ nullable: false })
+    categoryId: number;
 }

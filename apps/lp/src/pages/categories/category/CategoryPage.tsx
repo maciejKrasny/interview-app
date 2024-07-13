@@ -1,23 +1,24 @@
-import { GET_CATEGORIES_WITH_QUESTIONS, GET_CATEGORIES_WITH_QUESTIONS_DATA } from '#//api/queries/getCategoriesWithQuestions';
 import Loader from '#//components/Loader/Loader';
 import withMenu from '#//utils/withMenu.hoc';
-import { useQuery } from '@apollo/client';
 import { useParams } from 'react-router-dom';
 import { QuestionsContainer } from './CategoryPage.styled';
 import Accordion from '#//components/Accordion/Accordion';
 import AccordionBody from './AccordionBody';
+import { useAppDispatch, useAppSelector } from '#//redux/hooks';
+import { useEffect } from 'react';
+import { fetchCategory } from '#//redux/slices/category.slice';
 
 const CategoryPage: React.FC = () => {
     const { id } = useParams();
 
-    const { loading, data } = useQuery<GET_CATEGORIES_WITH_QUESTIONS_DATA>(GET_CATEGORIES_WITH_QUESTIONS, {
-        variables: {
-            id: id,
-        },
-        fetchPolicy: 'no-cache',
-    });
+    const dispatch = useAppDispatch();
+    const { category, loading } = useAppSelector(state => state.categories)
 
-    if (loading) {
+    useEffect(() => {
+        dispatch(fetchCategory(id))
+    }, [id])
+
+    if (loading === 'pending') {
         return (
             <QuestionsContainer>
                 <Loader />
@@ -25,16 +26,17 @@ const CategoryPage: React.FC = () => {
         )
     }
 
-    if (!data) {
+    if (!category) {
         return <>Not Found</>
     }
 
     return (
         <QuestionsContainer>
-            {data.category.questions.map(({ id, textPolish, textEnglish, answerPolish, answerEnglish }) => (
+            {category.questions.map(({ id: questionId, textPolish, textEnglish, answerPolish, answerEnglish, learningStatus }) => (
                 <Accordion
-                    key={id}
-                    body={<AccordionBody answerEnglish={answerEnglish} answerPolish={answerPolish} />}
+                    status={learningStatus}
+                    key={questionId}
+                    body={<AccordionBody id={questionId} status={learningStatus} answerEnglish={answerEnglish} answerPolish={answerPolish} />}
                     title={textPolish}
                     secordaryTitle={textEnglish}
                 />

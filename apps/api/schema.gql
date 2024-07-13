@@ -17,6 +17,7 @@ type Question {
   answerEnglish: String!
   learningStatus: String!
   category: Category!
+  categoryId: String!
 }
 
 """
@@ -33,6 +34,7 @@ type Query {
 type Mutation {
   createCategory(createCategoryDto: CreateCategoryDto!): Category!
   createQuestion(createQuestionDto: CreateQuestionDto!): Question!
+  updateLearningStatus(id: String!, updateLearningStatusDto: UpdateLearningStatusDto!): Question!
 }
 
 input CreateCategoryDto {
@@ -45,4 +47,8 @@ input CreateQuestionDto {
   answerPolish: String!
   answerEnglish: String!
   categoryId: String!
+}
+
+input UpdateLearningStatusDto {
+  learningStatus: String!
 }
