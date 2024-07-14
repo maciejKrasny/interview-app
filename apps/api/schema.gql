@@ -5,7 +5,7 @@
 type Category {
   id: String!
   name: String!
-  questions: [Question!]!
+  questions(learningStatus: String): [Question!]!
 }
 
 type Question {

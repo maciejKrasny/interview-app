@@ -83,12 +83,14 @@ export const fetchCategories = createAppAsyncThunk(
 
 export const fetchCategory = createAppAsyncThunk(
     'categories/fetchCategory',
-    async (id: string) => {
+    async ({ id, status }: { id: string, status?: string }) => {
         const response = await apolloClient.query<GET_CATEGORIES_WITH_QUESTIONS_DATA>({
             query: GET_CATEGORIES_WITH_QUESTIONS,
             variables: {
-                id
-            }
+                id,
+                learningStatus: status
+            },
+            fetchPolicy: 'no-cache',
         });
 
         return response.data.category;

@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { Repository } from "typeorm";
-import { QuestionEntity } from "./entities/question.entity";
+import { QuestionEntity, QuestionLearningStatus } from "./entities/question.entity";
 import { InjectRepository } from "@nestjs/typeorm";
 import { CreateQuestionDto } from "./dtos/createQuestion.dto";
 import { UpdateLearningStatusDto } from "./dtos/updateLearningStatus.dto";
@@ -29,7 +29,7 @@ export class QuestionService {
         return a;
     }
 
-    getAllForCategory(categoryId: string) {
+    getAllForCategory(categoryId: string, learningStatus?: QuestionLearningStatus) {
         return this.questionRepository.find({
             order: {
                 creationDate: 'ASC',
@@ -37,7 +37,8 @@ export class QuestionService {
             where: {
                 category: {
                     id: categoryId,
-                }
+                },
+                learningStatus
             }
         })
     }

@@ -28,6 +28,10 @@ const AccordionBody: React.FC<AccordionBodyProps> = ({ answerPolish, answerEngli
     const body = selectedSegment === 'PL' ? answerPolish : answerEnglish;
 
     const handleOnStatusChange = (value: LearningStatus) => {
+        if (value === status) {
+            return;
+        }
+
         const updateBody: UPDATE_LEARNING_STATUS_PARAMS = {
             id,
             updateLearningStatusDto: {

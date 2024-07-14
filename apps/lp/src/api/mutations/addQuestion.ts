@@ -9,7 +9,7 @@ export const ADD_QUESTION = gql`
     }
 `;
 
-export interface QuestionWithCategory extends Omit<Question, 'id'> {
+export interface QuestionWithCategory extends Omit<Question, 'id' | 'learningStatus'> {
     categoryId: string;
 }
 

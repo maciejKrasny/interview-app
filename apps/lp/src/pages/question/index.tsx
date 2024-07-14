@@ -145,7 +145,7 @@ const QuestionPage: React.FC = () => {
             return [];
         }
         return categories.map(({ id, name }) => (
-            <SelectOption label={name} value={id} />
+            <SelectOption key={id} label={name} value={id} />
         ))
     }, [categories])
 

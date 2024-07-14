@@ -2,9 +2,12 @@ import { toRem } from "#//styles/utils/calc";
 import styled, { css } from "styled-components";
 
 export const QuestionsContainer = styled.div`
+    display: flex;
+    flex-direction: column;
     margin: 0 auto;
     padding: 6rem 1rem 2rem;
     max-width: ${toRem(1024)};
+    gap: 1rem;
 `;
 
 export const AnswerContainer = styled.div`

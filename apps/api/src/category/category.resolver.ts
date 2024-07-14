@@ -4,6 +4,7 @@ import { CategoryService } from "./category.service";
 import { Question } from "src/question/models/question.model";
 import { QuestionService } from "src/question/question.service";
 import { CreateCategoryDto } from "./dtos/createCategory.dto";
+import { QuestionLearningStatus } from "src/question/entities/question.entity";
 
 @Resolver(() => Category)
 export class CategoryResolver {
@@ -23,8 +24,8 @@ export class CategoryResolver {
     }
 
     @ResolveField(() => [Question], { name: 'questions' })
-    getQuestions(@Parent() category: Category) {
-        return this.questionService.getAllForCategory(category.id)
+    getQuestions(@Parent() category: Category, @Args('learningStatus', { nullable: true }) learningStatus: QuestionLearningStatus) {
+        return this.questionService.getAllForCategory(category.id, learningStatus)
     }
 
     @Mutation(() => Category)
