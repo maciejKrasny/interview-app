@@ -12,6 +12,6 @@ export default function getEnvironmentVariables(): EnvirontmentParams {
     }
 
     return {
-        API_URL: ''
+        API_URL: import.meta.env.VITE_API_URL || ''
     };
 }
