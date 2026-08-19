@@ -22,6 +22,7 @@ const CategoryPage: React.FC = () => {
     }
 
     useEffect(() => {
+        if (!id) return;
         dispatch(fetchCategory({ id }))
     }, [id])
 
