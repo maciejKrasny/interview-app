@@ -1,16 +1,16 @@
-import { GET_CATEGORIES, GET_CATEGORIES_DATA } from "#//api/queries/getCategories";
-import { apolloClient } from "#//App";
-import { Category } from "#//models/Category";
-import { createSlice } from "@reduxjs/toolkit";
-import { createAppAsyncThunk } from "../hooks";
-import { GET_CATEGORIES_WITH_QUESTIONS, GET_CATEGORIES_WITH_QUESTIONS_DATA } from "#//api/queries/getCategoriesWithQuestions";
-import { UPDATE_LEARNING_STATUS, UPDATE_LEARNING_STATUS_DATA, UPDATE_LEARNING_STATUS_PARAMS } from "#//api/mutations/updateLearningStatus";
+import { GET_CATEGORIES, GET_CATEGORIES_DATA } from '#//api/queries/getCategories';
+import { apolloClient } from '#//App';
+import { Category } from '#//models/Category';
+import { createSlice } from '@reduxjs/toolkit';
+import { createAppAsyncThunk } from '../hooks';
+import { GET_CATEGORIES_WITH_QUESTIONS, GET_CATEGORIES_WITH_QUESTIONS_DATA } from '#//api/queries/getCategoriesWithQuestions';
+import { UPDATE_LEARNING_STATUS, UPDATE_LEARNING_STATUS_DATA, UPDATE_LEARNING_STATUS_PARAMS } from '#//api/mutations/updateLearningStatus';
 
-interface CategorySliceState {
+export interface CategorySliceState {
     category?: Category;
     loading: 'idle' | 'pending' | 'succeeded' | 'failed'
     categories: Omit<Category, 'questions'>[];
-    currentRequestId?: String;
+    currentRequestId?: string;
 }
 
 const initialState: CategorySliceState = {

@@ -4,7 +4,7 @@ import { createAppAsyncThunk } from "../hooks";
 import { ADD_QUESTION, ADD_QUESTION_PARAMS } from "../../api/mutations/addQuestion";
 import { apolloClient } from "#//App";
 
-interface InitialState {
+export interface InitialState {
     loading: 'idle' | 'pending' | 'succeeded' | 'failed'
     currentRequestId?: string;
 }
