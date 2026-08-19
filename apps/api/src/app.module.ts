@@ -13,6 +13,7 @@ import * as path from 'path';
 @Module({
   imports: [
     ConfigModule.forRoot({
+      isGlobal: true,
       load: [config],
     }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
@@ -32,13 +33,16 @@ import * as path from 'path';
         database: 'interview_app',
         synchronize: false,
         entities: ['dist/src/**/*.entity*{.ts,.js}'],
-        migrations: ['dist/database/migrations/*.js']
-      })
+        migrations: ['dist/database/migrations/*.js'],
+        ssl: {
+          rejectUnauthorized: false,
+        },
+      }),
     }),
     CategoryModule,
-    QuestionModule
+    QuestionModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}

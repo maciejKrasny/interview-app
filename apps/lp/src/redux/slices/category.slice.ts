@@ -98,7 +98,7 @@ export const fetchCategory = createAppAsyncThunk(
 )
 
 export const updateLearningStatusQuestion = createAppAsyncThunk(
-    'questions/createQuestion',
+    'categories/updateLearningStatus',
     async (params: UPDATE_LEARNING_STATUS_PARAMS) => {
 
         const response = await apolloClient.mutate<UPDATE_LEARNING_STATUS_DATA>({

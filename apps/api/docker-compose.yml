@@ -8,7 +8,7 @@ services:
       - 5432:5432
     environment:
       POSTGRES_DB: interview_app
-      POSTGRES_USER: docker
+      POSTGRES_USER: postgres
       POSTGRES_PASSWORD: secret
     volumes:
       - interview_app_data:/var/lib/postgresql/data

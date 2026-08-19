@@ -27,7 +27,8 @@ export const AppDataSource = new DataSource({
     synchronize: false,
     logging: true,
     logger: 'advanced-console',
-    schema: 'public'
+    schema: 'public',
+    ssl: false
 })
 
 AppDataSource.initialize()

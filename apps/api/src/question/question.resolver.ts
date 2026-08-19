@@ -1,4 +1,6 @@
 import { Args, Resolver, Query, Mutation, ResolveField, Parent } from "@nestjs/graphql";
+import { UseGuards } from "@nestjs/common";
+import { AuthGuard } from "src/auth/auth.guard";
 import { Question } from "./models/question.model";
 import { QuestionService } from "./question.service";
 import { CreateQuestionDto } from "./dtos/createQuestion.dto";
@@ -19,6 +21,7 @@ export class QuestionResolver {
     }
 
     @Mutation(() => Question)
+    @UseGuards(AuthGuard)
     async createQuestion(@Args('createQuestionDto') dto: CreateQuestionDto) {
         return this.questionService.create(dto);
     }

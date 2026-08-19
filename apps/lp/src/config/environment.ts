@@ -7,7 +7,7 @@ const localEnvironment: EnvirontmentParams = {
 }
 
 export default function getEnvironmentVariables(): EnvirontmentParams {
-    if (import.meta.env.NODE_ENV !== 'production') {
+    if (import.meta.env.MODE !== 'production') {
         return localEnvironment;
     }
 

@@ -1,6 +1,10 @@
 import { DataSource } from "typeorm";
 import * as path from 'path';
 
+import { config } from 'dotenv';
+
+config();
+
 const entitiesCatalog = process.env.NODE_ENV === 'production'
     ? '/**/*.entity*{.ts,.js}'
     : 'dist/src/**/*.entity*{.ts,.js}';
@@ -13,6 +17,7 @@ const migrationsCatalog = process.env.NODE_ENV === 'production'
 export const AppDataSource = new DataSource({
     type: 'postgres',
     host: process.env.DB_HOST,
+    // @ts-ignore
     port: parseInt(process.env.DB_PORT, 10) || 5432,
     username: process.env.DB_USERNAME,
     password: process.env.DB_PASSWORD,
@@ -24,7 +29,8 @@ export const AppDataSource = new DataSource({
     synchronize: false,
     logging: true,
     logger: 'advanced-console',
-    schema: 'public'
+    schema: 'public',
+  ssl: false,
 })
 
 AppDataSource.initialize()
