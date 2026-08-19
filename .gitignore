@@ -134,3 +134,7 @@ common/deploy
 common/temp
 common/autoinstallers/*/.npmrc
 **/.rush/temp
+
+*storybook.log
+
+.idea

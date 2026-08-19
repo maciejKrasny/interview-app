@@ -1,0 +1,54 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Category {
+  id: String!
+  name: String!
+  questions(learningStatus: String): [Question!]!
+}
+
+type Question {
+  id: String!
+  creationDate: DateTime!
+  textPolish: String!
+  textEnglish: String!
+  answerPolish: String!
+  answerEnglish: String!
+  learningStatus: String!
+  category: Category!
+  categoryId: String!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Query {
+  categories: [Category!]!
+  category(id: String!): Category!
+  questionsByCategory(categoryId: String!): [Question!]!
+}
+
+type Mutation {
+  createCategory(createCategoryDto: CreateCategoryDto!): Category!
+  createQuestion(createQuestionDto: CreateQuestionDto!): Question!
+  updateLearningStatus(id: String!, updateLearningStatusDto: UpdateLearningStatusDto!): Question!
+}
+
+input CreateCategoryDto {
+  name: String!
+}
+
+input CreateQuestionDto {
+  textPolish: String!
+  textEnglish: String!
+  answerPolish: String!
+  answerEnglish: String!
+  categoryId: String!
+}
+
+input UpdateLearningStatusDto {
+  learningStatus: String!
+}
